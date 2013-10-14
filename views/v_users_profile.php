@@ -1,3 +1,9 @@
-<?php if(isset($user_name)): ?>
+<?php if(isset($user)): ?>
 
-<h1>This is the profile of <?=$user->first_name?></h1>
+<div>
+<h1>This is the profile of <?= $user->first_name?></h1>
+</div>
+
+<?php endif; ?>
+
+
