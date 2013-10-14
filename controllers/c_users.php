@@ -4,7 +4,7 @@ class users_controller extends base_controller {
 
 	public function __construct() {
 		parent::__construct();
-		echo "users_controller construct called<br></br>";
+		//echo "users_controller construct called<br></br>";
 	}
 
 	public function index() {
@@ -27,7 +27,7 @@ class users_controller extends base_controller {
 
 		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 
-		$user_id = DB::instance(p2_visualedgedev_com)->insert('users', $_POST);
+		$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
 
 		echo "You are signed up";
 	}
@@ -42,7 +42,7 @@ class users_controller extends base_controller {
 
 	public function p_login() {
 
-		$_POST = DB::instance(p2_visualedgedev_com)->sanitize($_POST);
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
@@ -51,7 +51,7 @@ class users_controller extends base_controller {
         	WHERE email = '".$_POST['email']."'
         	AND password = '".$_POST['password']."'";
 
-		$token = DB::instance(p2_visualedgedev_com)->select_field($q);
+		$token = DB::instance(DB_NAME)->select_field($q);
 
 		if(!$token) {
 			Router::redirect("/users/login/");
@@ -72,7 +72,7 @@ class users_controller extends base_controller {
 
 		$data = Array("token" => $new_token);
 
-		DB::instance(p2_visualedgedev_com)->update("users", $data, "WHERE token = '".$this->user->token."'");
+		DB::instance(DB_NAME)->update("users", $data, "WHERE token = '".$this->user->token."'");
 
 		setcookie("token", "", strtotime('-1 year'), '/');
 
