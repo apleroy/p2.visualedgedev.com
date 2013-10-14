@@ -1,7 +1,7 @@
 <?php if(isset($user)): ?>
 
 <div>
-<h1>This is the profile of <?= $user->first_name?></h1>
+<h2>This is the profile of <?= $user->first_name?></h2>
 </div>
 
 <?php endif; ?>
