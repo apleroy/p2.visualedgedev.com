@@ -24,10 +24,9 @@
 		<!--Menu for those not logged in-->
 		<?php else: ?>
 			<a href='/users/signup'>SIGN UP</a>
-			<a href='users/login'>LOG IN</a>
+			<a href='/users/login'>LOG IN</a>
 
 		<?php endif; ?>	
-
 
 	</div>
 
