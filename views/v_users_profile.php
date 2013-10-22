@@ -1,6 +1,6 @@
 <?php if(isset($user)): ?>
 
-<div>
+<div id="test">
 <h2>This is the profile of <?= $user->first_name?></h2>
 </div>
 

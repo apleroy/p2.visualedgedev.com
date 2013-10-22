@@ -8,12 +8,12 @@ class users_controller extends base_controller {
 	}
 
 	public function index() {
-		echo "This is the index page";
+		//echo "This is the index page";
 	}
 
 	public function signup() {
 		$this->template->content = View::instance('v_users_signup');
-		$this->template->title = "sign Up";
+		$this->template->title = "Sign Up";
 
 		echo $this->template;
 	}
@@ -29,7 +29,8 @@ class users_controller extends base_controller {
 
 		$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
 
-		echo "You are signed up";
+		Router::redirect("/");
+
 	}
 
 	public function login() {
