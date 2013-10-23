@@ -37,6 +37,9 @@ class users_controller extends base_controller {
 		$this->template->content = View::instance('v_users_login');
 		$this->template->title = "Login";
 
+		
+
+		
 		echo $this->template;
 
 	}
