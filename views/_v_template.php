@@ -37,7 +37,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav"> -->
-            <li><a href='/'>HOME</a></li>
+        <li><a href='/'>HOME</a></li>
             <?php if($user): ?>
 				<li><a href='/users/logout'>LOGOUT</a></li>
 				<li><a href='/users/profile'>PROFILE</a></li>
