@@ -29,7 +29,7 @@ class users_controller extends base_controller {
 
 		$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
 
-		Router::redirect("/");
+		Router::redirect("/users/profile");
 
 	}
 
@@ -64,7 +64,7 @@ class users_controller extends base_controller {
 		else {
 			setcookie("token", $token, strtotime('+1 year'), '/');
 
-			Router::redirect("/");
+			Router::redirect("/users/profile");
 			//echo "Logged in!";
 		}
 
@@ -92,16 +92,62 @@ class users_controller extends base_controller {
 
 		$this->template->content = View::instance('v_users_profile');
 
-		$this->template->title = "Profile of".$this->user->first_name;
+		$this->template->title = "Profile of ".$this->user->first_name;
 
+		$q = "SELECT bios.content
+			FROM bios
+			WHERE bios.user_id = ".$this->user->user_id;
+
+		$bios = DB::instance(DB_NAME)->select_rows($q);
+
+		$this->template->content->bios = $bios;
+
+		$picQ = "SELECT profilePics.picture
+			FROM profilePics
+			WHERE profilePics.user_id = ".$this->user->user_id;
+
+		$pics = DB::instance(DB_NAME)->select_rows($picQ);
+
+		$this->template->content->pics = $pics;
+		
+		echo $this->template;
+	
 		//$client_files_head = Array("/css/profile.css");
 		//$this->template->client_files_head = Utils::load_client_files($client_files_head);
 
 		//$client_files_body = Array("/js/profile.min.js");
 		//$this->template->client_files_body = Utils::load_client_files($client_files_body);
 
-		echo $this->template;
+		
+	}
 
+	public function p_bio() {
+		$_POST['user_id'] = $this->user->user_id;
+
+		$_POST['created'] = Time::now();
+
+		$_POST['bio_id'] = $this->user->user_id;
+		
+		DB::instance(DB_NAME)->update_or_insert_row('bios', $_POST);
+		
+		Router::redirect("/users/profile");
+	}
+
+
+	public function p_upload() {
+		
+		$_POST['user_id'] = $this->user->user_id;
+
+		$_POST['created'] = Time::now();
+
+		$_POST['pic_id'] = $this->user->user_id;
+
+		$_POST['picture'] = Upload::upload($_FILES, "/views/images/", array("jpg", "jpeg", "gif", "png"), "picture".$this->user->user_id);
+
+		DB::instance(DB_NAME)->update_or_insert_row('profilePics', $_POST);
+
+		Router::redirect("/users/profile");
+		
 	}
 
 
