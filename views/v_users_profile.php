@@ -13,11 +13,12 @@
 
 <br><br>
 
+
 <?php foreach($pics as $pic): ?>
 
-<br><br>
-<img src="/views/images/<?=$pic['picture']?>">
-
+	<div class="profile_picture">
+		<img src="/views/images/<?=$pic['picture']?>" width="40" height="40">
+	</div>
 <?php endforeach; ?>
 
 

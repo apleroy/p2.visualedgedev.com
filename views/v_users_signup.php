@@ -1,3 +1,8 @@
+<script language="javascript" type="text/javascript" src="jstz.js">
+var timezone = jstz.determine();
+timezone.name();
+</script>
+
 <form method='POST' action='/users/p_signup'>
 	First Name<br>
 	<input type='text' name='first_name'><br>
@@ -13,9 +18,17 @@
 	<br>
 	<input type='submit' value='Sign Up'>
 	<input type='hidden' name='timezone'>
-		<script>
+		 <script>
     		$('input[name=timezone]').val(jstz.determine().name());
-    		var tz = jstz.determine(); // Determines the time zone of the browser client
-    		tz.name(); // Returns the name of the time zone eg "Europe/Berlin"
-		</script>
+     		//var tz = jstz.determine(); // Determines the time zone of the browser client
+     		//tz.name(); // Returns the name of the time zone eg "Europe/Berlin"
+		 </script>
 </form>
+
+<?php if(isset($error)): ?>
+<div class = 'error'>
+	That email address is already taken.  Please login or signup as a different user.
+</div>
+<?php endif; ?>
+<br>
+

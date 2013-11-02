@@ -11,44 +11,77 @@ class users_controller extends base_controller {
 		//echo "This is the index page";
 	}
 
-	public function signup() {
+	public function signup($error = NULL) {
 		$this->template->content = View::instance('v_users_signup');
+		
 		$this->template->title = "Sign Up";
+
+		$this->template->content->error = $error;
 
 		echo $this->template;
 	}
 
 	public function p_signup() {
 
-		$_POST['created'] = Time::now();
-		$_POST['modified'] = Time::now();
+		//$email_field = $_POST['email'];
 
-		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+		$q = "SELECT users.email
+			FROM users 
+        	WHERE users.email = '".$_POST['email']."'
+        	";
+		
+		$email_validation = DB::instance(DB_NAME)->select_field($q);
 
-		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+		if($email_validation) {
+			
+			Router::redirect("/users/signup/error");
+		
+		} else {
 
-		$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
+			$_POST['created'] = Time::now();
+			$_POST['modified'] = Time::now();
+			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+			$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 
-		Router::redirect("/users/profile");
+			$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
 
+			//somehow login and authenicate the user directly to their profile
+			
+			//setcookie("token", $token, strtotime('+1 year'), '/');
+
+			$q2 = "SELECT token
+			FROM users 
+        	WHERE email = '".$_POST['email']."'
+        	AND password = '".$_POST['password']."'";
+
+			$token = DB::instance(DB_NAME)->select_field($q2);
+
+				setcookie("token", $token, strtotime('+1 year'), '/');
+
+				Router::redirect("/users/profile");
+					//echo "Logged in!";
+			
+			
+			//Router::redirect("/users/profile");
+		}
 	}
 
 	public function login() {
 		$this->template->content = View::instance('v_users_login');
 		$this->template->title = "Login";
 
-		
-
-		
 		echo $this->template;
 
 	}
 
 	public function p_login() {
 
+			
 		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+
+		// $_POST['last_login'] = DB::instance(DB_NAME)->insert(Time::now());
 
 		$q = "SELECT token
 			FROM users 
@@ -112,12 +145,6 @@ class users_controller extends base_controller {
 		
 		echo $this->template;
 	
-		//$client_files_head = Array("/css/profile.css");
-		//$this->template->client_files_head = Utils::load_client_files($client_files_head);
-
-		//$client_files_body = Array("/js/profile.min.js");
-		//$this->template->client_files_body = Utils::load_client_files($client_files_body);
-
 		
 	}
 
