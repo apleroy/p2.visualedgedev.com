@@ -1,15 +1,32 @@
+<div class = "wrapper">
+
 <?php foreach($users as $user): ?>
+		
+	<div class = "discover_user">
+		
 
-	<?=$user['first_name']?> <?$user['last_name']?>
+		<?php foreach($pics as $pic) : ?>
+			<?php if($user['user_id'] == $pic['user_id']): ?>
+				<div class = "discover_pic">
+					<img src="/uploads/profiles/<?=$pic['picture']?>" width="50" height="50">
+				</div>
+			<?php endif; ?>
+		<?php endforeach; ?>
 
-	<?php if(isset($connections[$user['user_id']])): ?>
-		<a href='/posts/unfollow/<?=$user['user_id']?>'>Unfollow</a>
+		<div class = "discover_name">
+			<?=$user['first_name']?> <?=$user['last_name']?>
+		</div>
+		
+		<div class = "discover_connection">
+			<?php if(isset($connections[$user['user_id']])): ?>
+				<a href='/posts/unfollow/<?=$user['user_id']?>'>Unfollow</a>
+			<?php else: ?>
+				<a href='/posts/follow/<?=$user['user_id']?>'>Follow</a>
+			<?php endif; ?>
+		</div>
 
-	<?php else: ?>
-		<a href='/posts/follow/<?=$user['user_id']?>'>Follow</a>
-
-	<?php endif; ?>
-
-	<br><br>
-
+	</div>
+	<br>
 <?php endforeach; ?>
+
+</div>

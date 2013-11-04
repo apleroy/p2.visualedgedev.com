@@ -1,3 +1,5 @@
+<div class = "wrapper">
+
 <form method='POST' action='/posts/p_add'>
 	
 	<label for='content'>New Post:</label><br>
@@ -7,3 +9,5 @@
 	<input type='submit' value='Make post'>
 
 </form>
+
+</div>

@@ -1,19 +1,186 @@
-
-
 body {
-	width: 740px;
+	margin: 0;
+	background-color: gray;
+}
+
+.navigation_background {
+	width: 100%;
+	height: 60px;
+	background-color: blue;
+	position: absolute;
+	z-index: -1;
+}
+
+.wrapper {
 	margin: auto;
+	width: 960px;
 	background-color: #1C2140;
+	color: white;
+	position: relative;
+
 }
 
-.container {
-	background-color: #5368A6;
+.navigation {
+	width: 100%;
+	height: 60px;
+	background-color: red;
+	z-index: 2;
 }
 
-.profile_picture {
-	width:50px;
-	height:50px;
-	overflow: hidden; 
-	background-color: #DC143C;
+/*HOME PAGE --------------------------------------------*/	
+	#login_form {
+		margin-top: 20px;
+		float: right;
+		z-index: 3;
+	}
+
+	#home_main {
+		margin-top: 100px;
+		min-height: 400px;
+		background-color: green;
+	}
+
+/*--------------------------------------------------------*/
+
+.picture_div {
+	background-color: green;
+	height: 250px;
+	width: 250px;
+	float: left;
 }
 
+.bio_div {
+	background-color: blue;
+	height: 250px;
+	width: 710px;
+	margin-left: 250px;
+}
+	
+	.bio_content {
+		background-color: black;
+		height: 180px;
+		padding: 10px;
+		overflow: hidden; 
+	}
+
+	.profile_picture {
+		width:250px;
+		height:250px;
+		overflow: hidden;
+
+		
+	}
+
+		#picture_upload {
+			width: 50%;
+			height: 50px;
+			background-color: orange;
+			float: left;
+		}
+
+		#bio_upload {
+			width: 50%;
+			height: 50px;
+			background-color: green;
+			margin-left: 50%;
+		}
+
+.discover_post a {
+	color: white;
+}
+
+	.discover_element {
+		width:50%;
+		height: 30px;
+		padding-top: 10px;
+		background-color: red;
+		float: left;
+		text-align: center;
+	}
+	
+	.post_element {
+		width:50%;
+		height: 30px;
+		background-color: red;
+		margin-left: 50%;
+		padding-top: 10px;
+		text-align: center;
+	}
+
+	.post {
+		margin: auto;
+		min-height: 80px;
+		width: 95%;
+		padding: 10px;
+		background-color: orange;
+	}
+
+		.post_picture_holder {
+			height:100%;
+			width:90px;
+			
+			float: left;
+		}
+
+			.post_picture {
+				height: 80px;
+				width: 80px;
+				float: left;
+				background-color: gray;
+			}
+
+		.post_person {
+			margin-left: 90px;
+			background-color: green;
+		}
+
+		.post_content {
+			margin-left: 90px;
+		}
+
+		.post_time {
+			margin-left: 90px;
+			background-color: red;
+		}
+
+	.discover_user {
+		margin: auto;
+		height: 70px;
+		width: 500px;
+		
+		border-style: solid;
+		border-color: white;
+		border-width: 5px;
+	}
+
+		.discover_pic {
+			
+			height: 50px;
+			width: 50px;
+			padding: 10px;
+			float: left;
+		}
+
+		.discover_name{
+			width: 360px;
+			padding: 10px;
+			height:50px;
+			float: left;
+			position: absolute;
+			margin-left: 60px;
+			font-size: 30px;
+		}
+		.discover_connection {
+			width: 50px;
+			padding: 10px;
+			margin-top: 20px;
+			float: left;
+			margin-left: 400px;
+			position: absolute;
+			background-color: green;
+
+		}
+
+h1 {
+	margin: 0;
+}

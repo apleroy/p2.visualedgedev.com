@@ -4,78 +4,98 @@ class users_controller extends base_controller {
 
 	public function __construct() {
 		parent::__construct();
-		//echo "users_controller construct called<br></br>";
 	}
 
 	public function index() {
-		//echo "This is the index page";
 	}
 
-	public function signup($error = NULL) {
-		$this->template->content = View::instance('v_users_signup');
+	public function signup($signuperror = NULL, $duplicateerror = NULL) {
 		
-		$this->template->title = "Sign Up";
+		$this->template->content = View::instance('v_index_index');
 
-		$this->template->content->error = $error;
+		$this->template->content->signuperror = $signuperror;
+
+		$this->template->content->duplicateerror = $duplicateerror;
 
 		echo $this->template;
 	}
 
 	public function p_signup() {
 
-		//$email_field = $_POST['email'];
+		//ensure valid email address syntax- this is the variable
+			$email_a = $_POST['email'];
 
-		$q = "SELECT users.email
-			FROM users 
-        	WHERE users.email = '".$_POST['email']."'
-        	";
-		
-		$email_validation = DB::instance(DB_NAME)->select_field($q);
-
-		if($email_validation) {
+		//check to ensure there is not already a user with that email (a duplicate)
+			$q = "SELECT users.email
+				FROM users 
+	        	WHERE users.email = '".$_POST['email']."'
+	        	";
 			
-			Router::redirect("/users/signup/error");
+			$email_validation = DB::instance(DB_NAME)->select_field($q);
+
+		//validation of empty fields
+
+		if (empty($_POST['first_name'])) {
+        	Router::redirect("/users/signup/signuperror");
+
+    	} elseif (empty($_POST['last_name'])) {
+        	Router::redirect("/users/signup/signuperror");
+        	
+    	} elseif (empty($_POST['email'])) {
+        	Router::redirect("/users/signup/signuperror");
+        	
+    	} elseif (empty($_POST['password'])) {
+        	Router::redirect("/users/signup/signuperror");
+        
+        //check for valid email syntax	
+    	} elseif (!filter_var($email_a, FILTER_VALIDATE_EMAIL)) {
+    	
+			Router::redirect("/users/signup/signuperror");
 		
+    	} 
+    	//check duplicate
+    	elseif ($email_validation) {
+				
+			Router::redirect("/users/signup/duplicateerror");
+		
+		//signup the user and send info to DB	
 		} else {
 
-			$_POST['created'] = Time::now();
-			$_POST['modified'] = Time::now();
-			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
-			$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+				$_POST['created'] = Time::now();
+				$_POST['modified'] = Time::now();
+				$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+				$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 
-			$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
+				$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
 
-			//somehow login and authenicate the user directly to their profile
-			
-			//setcookie("token", $token, strtotime('+1 year'), '/');
+							
+				//upon signup, give the user a token to continue directly to their page
+				$q2 = "SELECT token
+				FROM users 
+	        	WHERE email = '".$_POST['email']."'
+	        	AND password = '".$_POST['password']."'";
 
-			$q2 = "SELECT token
-			FROM users 
-        	WHERE email = '".$_POST['email']."'
-        	AND password = '".$_POST['password']."'";
-
-			$token = DB::instance(DB_NAME)->select_field($q2);
+				$token = DB::instance(DB_NAME)->select_field($q2);
 
 				setcookie("token", $token, strtotime('+1 year'), '/');
 
 				Router::redirect("/users/profile");
-					//echo "Logged in!";
-			
-			
-			//Router::redirect("/users/profile");
-		}
+		}		
+	
 	}
+	
 
-	public function login() {
-		$this->template->content = View::instance('v_users_login');
-		$this->template->title = "Login";
-
+	public function login($error = NULL) {
+		
+		$this->template->content = View::instance('v_index_index');
+		
+		$this->template->content->error = $error;
+		
 		echo $this->template;
 
 	}
 
 	public function p_login() {
-
 			
 		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
@@ -91,7 +111,7 @@ class users_controller extends base_controller {
 		$token = DB::instance(DB_NAME)->select_field($q);
 
 		if(!$token) {
-			Router::redirect("/users/login/");
+			Router::redirect("/users/login/error");
 			//echo "Not valid";
 		}
 		else {
@@ -100,11 +120,10 @@ class users_controller extends base_controller {
 			Router::redirect("/users/profile");
 			//echo "Logged in!";
 		}
-
-
 	}
 
 	public function logout() {
+		
 		$new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
 
 		$data = Array("token" => $new_token);
@@ -117,7 +136,7 @@ class users_controller extends base_controller {
 
 	}
 
-	public function profile() {
+	public function profile($error = NULL) {
 
 		if(!$this->user) {
 			Router::redirect('/users/login');
@@ -125,23 +144,54 @@ class users_controller extends base_controller {
 
 		$this->template->content = View::instance('v_users_profile');
 
-		$this->template->title = "Profile of ".$this->user->first_name;
+		//This person's profile and name
+			$this->template->title = "Profile of ".$this->user->first_name;
 
-		$q = "SELECT bios.content
-			FROM bios
-			WHERE bios.user_id = ".$this->user->user_id;
+		//This person's bio
+			$bioQ = "SELECT bios.content
+				FROM bios
+				WHERE bios.user_id = ".$this->user->user_id;
 
-		$bios = DB::instance(DB_NAME)->select_rows($q);
+			$bios = DB::instance(DB_NAME)->select_rows($bioQ);
 
-		$this->template->content->bios = $bios;
+			$this->template->content->bios = $bios;
 
-		$picQ = "SELECT profilePics.picture
-			FROM profilePics
-			WHERE profilePics.user_id = ".$this->user->user_id;
+		//This person's profile picture
+			$picQ = "SELECT profilePics.picture
+				FROM profilePics
+				WHERE profilePics.user_id = ".$this->user->user_id;
 
-		$pics = DB::instance(DB_NAME)->select_rows($picQ);
+			$pics = DB::instance(DB_NAME)->select_rows($picQ);
 
-		$this->template->content->pics = $pics;
+			$this->template->content->pics = $pics;
+
+
+		//Show selected posts from people the user is following.
+		//Join together user pic from those people.
+		//Order the posts descending by time created so that most recent is on top
+			
+			$postsQ = 'SELECT
+				posts.content,
+				posts.created,
+				posts.user_id AS post_user_id,
+				users_users.user_id AS follower_id,
+				users.first_name,
+				users.last_name,
+				profilePics.picture
+			FROM posts
+			INNER JOIN users_users
+				ON posts.user_id = users_users.user_id_followed
+			INNER JOIN users
+				ON posts.user_id = users.user_id
+			INNER JOIN profilePics
+				ON profilePics.user_id = posts.user_id
+			WHERE users_users.user_id = '.$this->user->user_id .'
+			ORDER BY posts.created DESC';
+
+			$posts = DB::instance(DB_NAME)->select_rows($postsQ);
+
+			$this->template->content->posts = $posts;
+
 		
 		echo $this->template;
 	
@@ -163,21 +213,29 @@ class users_controller extends base_controller {
 
 	public function p_upload() {
 		
-		$_POST['user_id'] = $this->user->user_id;
+		$image = Upload::upload($_FILES, "/uploads/profiles/", array("jpg", "jpeg", "gif", "png"), "picture".$this->user->user_id);
 
-		$_POST['created'] = Time::now();
+		if($image == ' ' || $image == 'Invalid file type.') {
 
-		$_POST['pic_id'] = $this->user->user_id;
+            Router::redirect("/users/profile");
 
-		$_POST['picture'] = Upload::upload($_FILES, "/views/images/", array("jpg", "jpeg", "gif", "png"), "picture".$this->user->user_id);
+    	} else {
 
-		DB::instance(DB_NAME)->update_or_insert_row('profilePics', $_POST);
+			$_POST['user_id'] = $this->user->user_id;
 
-		Router::redirect("/users/profile");
+			$_POST['created'] = Time::now();
+
+			$_POST['pic_id'] = $this->user->user_id;
+
+	        $_POST['picture'] = Upload::upload($_FILES, "/uploads/profiles/", array("jpg", "jpeg", "gif", "png"), "picture".$this->user->user_id);
+
+			DB::instance(DB_NAME)->update_or_insert_row('profilePics', $_POST);
+
+			Router::redirect("/users/profile");
+
+		}
 		
 	}
-
-
 
 }
 

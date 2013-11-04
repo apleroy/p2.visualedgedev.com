@@ -12,33 +12,7 @@ class posts_controller extends base_controller {
 
 	public function index() {
 
-		$this->template->content = View::instance('v_posts_index');
-		$this->template->title = "All Posts";
-
-		// $q = "SELECT posts.*, users.first_name, users.last_name
-		// FROM posts, users 
-		// WHERE posts.user_id = users.user_id";
-
-		$q = 'SELECT
-				posts.content,
-				posts.created,
-				posts.user_id AS post_user_id,
-				users_users.user_id AS follower_id,
-				users.first_name,
-				users.last_name
-			FROM posts
-			INNER JOIN users_users
-				ON posts.user_id = users_users.user_id_followed
-			INNER JOIN users
-				ON posts.user_id = users.user_id
-			WHERE users_users.user_id = '.$this->user->user_id;
-
-
-		$posts = DB::instance(DB_NAME)->select_rows($q);
-
-		$this->template->content->posts = $posts;
-
-		echo $this->template;
+		Router::redirect("/users/profile");
 	}
 
 	public function add() {
@@ -60,7 +34,7 @@ class posts_controller extends base_controller {
 
 		DB::instance(DB_NAME)->insert('posts', $_POST);
 
-		echo "Your post has been added.  <a href='/posts/add'>Add Another</a>";
+		Router::redirect("/users/profile");
 
 	}
 
@@ -74,12 +48,18 @@ class posts_controller extends base_controller {
 
 		$users = DB::instance(DB_NAME)->select_rows($q);
 
-		$q = "SELECT *
+		$q3 = "SELECT *
+			FROM profilePics";
+
+		$pics = DB::instance(DB_NAME)->select_rows($q3);
+
+		$q2 = "SELECT *
 			FROM users_users
-			WHERE user_id = ".$this->user->user_id;
+			WHERE users_users.user_id = ".$this->user->user_id;
 
-		$connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
+		$connections = DB::instance(DB_NAME)->select_array($q2, 'user_id_followed');
 
+		$this->template->content->pics = $pics;
 		$this->template->content->users = $users;
 		$this->template->content->connections = $connections;
 
