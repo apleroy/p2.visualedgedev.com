@@ -1,5 +1,8 @@
 <div class = "wrapper">
-
+<div class = "top_bar">
+	
+</div>
+<br>
 <?php foreach($users as $user): ?>
 		
 	<div class = "discover_user">

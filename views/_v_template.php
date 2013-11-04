@@ -25,8 +25,11 @@
       <div class = "wrapper">
 
         <div class="navigation"> 
-    			<a href='/users/profile'>PROFILE</a>
-          <a href='/users/logout'>LOGOUT</a>
+          <div class = "logo">S<b>//</b>DEBAR</div>
+          <div class = "navigation_links">
+      			<li><a href='/users/profile'>PROFILE</a></li>
+            <li><a href='/users/logout'>LOGOUT</a></li>
+          </div>
         </div>
 
       </div>
@@ -37,6 +40,8 @@
 
 	<?php if(isset($client_files_body)) echo $client_files_body; ?>
 
+<div class="footer">
+</div>
 	
 </body>
 

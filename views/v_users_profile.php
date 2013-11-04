@@ -1,18 +1,18 @@
 <div class = "wrapper">
 
-	<?php if(isset($user)): ?>
+<div class = "top_bar">
+	
+</div>
 
-		
+	<?php if(isset($user)): ?>
 
 		<div class = "picture_div">
 			<?php foreach($pics as $pic): ?>
 
 				<div class="profile_picture">
-					<img src="/uploads/profiles/<?=$pic['picture']?>" width="250" height="250">
+					<img src="/uploads/profiles/<?=$pic['picture']?>" width="240" height="240">
 				</div>
 			<?php endforeach; ?>
-
-				
 
 		</div>
 
@@ -64,23 +64,24 @@
 			<div class = "post">
 				<div class = "post_picture_holder">
 					<div class = "post_picture">
-						<img src="/uploads/profiles/<?=$post['picture']?>" width="80" height="80">
+						<img src="/uploads/profiles/<?=$post['picture']?>" width="76" height="76">
 					</div>
 				</div>
 				
 				<div class = "post_person">
 					<?=$post['first_name']?> <?=$post['last_name']?>
+					<div class = "post_time">
+						<time datetime="<?=Time::display($post['created'], 'Y-m-d G:i')?>">
+							<?=Time::display($post['created'])?>
+						</time>
+					</div>
 				</div>
-			
+				<br>
 				<div class = "post_content">
 					<?=$post['content']?>
 				</div>
-
-				<div class = "post_time">
-					<time datetime="<?=Time::display($post['created'], 'Y-m-d G:i')?>">
-					<?=Time::display($post['created'])?>
-					</time>
-				</div>
+				<br>
+				
 			</div>
 		<br>
 	<?php endforeach; ?>

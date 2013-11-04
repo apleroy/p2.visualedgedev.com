@@ -4,7 +4,9 @@
 <div class = "wrapper">
 
 	<div class = "navigation">	
-	
+	  
+	  	<div class = "logo">S<b>//</b>DEBAR</div>
+		
 		<form id="login_form" method='POST' action='/users/p_login'>
 				Email<input type='text' name='email'>
 				Password<input type='password' name='password'>
@@ -17,17 +19,16 @@
 	        		<br>
     			<?php endif; ?>
 		</form>
-	
-	</div>
-	
-		<h1>
-			<?=APP_NAME?>
-		</h1> 
 
-		<div id="home_main">
+	</div>
+
+	<div class="top_bar">
+	</div>	
+	
+		
 			
 			<!--Signup Form -->
-			<form method='POST' action='/users/p_signup'>
+			<form id="signup_form" method='POST' action='/users/p_signup'>
 				First Name<br>
 				<input type='text' name='first_name'><br>
 				<br>
@@ -60,7 +61,7 @@
 			</form>
 
 
-		</div>	
+		
 
 
 

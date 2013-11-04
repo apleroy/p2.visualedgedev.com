@@ -1,12 +1,18 @@
 body {
 	margin: 0;
-	background-color: gray;
+	background-image: url(data:image/png;base64,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);
+	background-color: #959CA6;
+}
+
+h1 {
+	margin: 0;
+	font-size: 20px;
 }
 
 .navigation_background {
 	width: 100%;
 	height: 60px;
-	background-color: blue;
+	background-color: #2F363E;
 	position: absolute;
 	z-index: -1;
 }
@@ -14,17 +20,68 @@ body {
 .wrapper {
 	margin: auto;
 	width: 960px;
-	background-color: #1C2140;
+	background-color: #004158;
 	color: white;
 	position: relative;
+	height: auto;
+	min-height: 100%;
 
 }
 
 .navigation {
 	width: 100%;
 	height: 60px;
-	background-color: red;
+	background-color: #2F363E;
 	z-index: 2;
+	color: white;
+}
+
+		.logo {
+			font-size: 20px;
+			float:left;
+			margin-top: 15px;
+		}
+		.navigation_links {
+			margin-top: 15px;
+			color: white;
+			float: right;
+		}
+
+			a {
+				color: white;
+				padding: 5px;
+			}
+			
+			li {display:inline;}
+
+			li a:link {
+				text-decoration: none;
+				color: #000066;
+			}
+
+			li a:visited {text-decoration: none}
+
+			li a:active {text-decoration: none}
+
+			li a:hover { 
+				border-bottom: solid 2px #0099ff;
+			}
+	
+
+
+.top_bar {
+		width: 100%;
+		height:10px;
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c8TV1mAAAAG3RSTlNAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEAvEOwtAAAFVklEQVR4XpWWB67c2BUFb3g557T/hRo9/WUMZHlgr4Bg8Z4qQgQJlHI4A8SzFVrapvmTF9O7dmYRFZ60YiBhJRCgh1FYhiLAmdvX0CzTOpNE77ME0Zty/nWWzchDtiqrmQDeuv3powQ5ta2eN0FY0InkqDD73lT9c9lEzwUNqgFHs9VQce3TVClFCQrSTfOiYkVJQBmpbq2L6iZavPnAPcoU0dSw0SUTqz/GtrGuXfbyyBniKykOWQWGqwwMA7QiYAxi+IlPdqo+hYHnUt5ZPfnsHJyNiDtnpJyayNBkF6cWoYGAMY92U2hXHF/C1M8uP/ZtYdiuj26UdAdQQSXQErwSOMzt/XWRWAz5GuSBIkwG1H3FabJ2OsUOUhGC6tK4EMtJO0ttC6IBD3kM0ve0tJwMdSfjZo+EEISaeTr9P3wYrGjXqyC1krcKdhMpxEnt5JetoulscpyzhXN5FRpuPHvbeQaKxFAEB6EN+cYN6xD7RYGpXpNndMmZgM5Dcs3YSNFDHUo2LGfZuukSWyUYirJAdYbF3MfqEKmjM+I2EfhA94iG3L7uKrR+GdWD73ydlIB+6hgref1QTlmgmbM3/LeX5GI1Ux1RWpgxpLuZ2+I+IjzZ8wqE4nilvQdkUdfhzI5QDWy+kw5Wgg2pGpeEVeCCA7b85BO3F9DzxB3cdqvBzWcmzbyMiqhzuYqtHRVG2y4x+KOlnyqla8AoWWpuBoYRxzXrfKuILl6SfiWCbjxoZJUaCBj1CjH7GIaDbc9kqBY3W/Rgjda1iqQcOJu2WW+76pZC9QG7M00dffe9hNnseupFL53r8F7YHSwJWUKP2q+k7RdsxyOB11n0xtOvnW4irMMFNV4H0uqwS5ExsmP9AxbDTc9JwgneAT5vTiUSm1E7BSflSt3bfa1tv8Di3R8n3Af7MNWzs49hmauE2wP+ttrq+AsWpFG2awvsuOqbipWHgtuvuaAE+A1Z/7gC9hesnr+7wqCwG8c5yAg3AL1fm8T9AZtp/bbJGwl1pNrE7RuOX7PeMRUERVaPpEs+yqeoSmuOlokqw49pgomjLeh7icHNlG19yjs6XXOMedYm5xH2YxpV2tc0Ro2jJfxC50ApuxGob7lMsxfTbeUv07TyYxpeLucEH1gNd4IKH2LAg5TdVhlCafZvpskfncCfx8pOhJzd76bJWeYFnFciwcYfubRc12Ip/ppIhA1/mSZ/RxjFDrJC5xifFjJpY2Xl5zXdguFqYyTR1zSp1Y9p+tktDYYSNflcxI0iyO4TPBdlRcpeqjK/piF5bklq77VSEaA+z8qmJTFzIWiitbnzR794USKBUaT0NTEsVjZqLaFVqJoPN9ODG70IPbfBHKK+/q/AWR0tJzYHRULOa4MP+W/HfGadZUbfw177G7j/OGbIs8TahLyynl4X4RinF793Oz+BU0saXtUHrVBFT/DnA3ctNPoGbs4hRIjTok8i+algT1lTHi4SxFvONKNrgQFAq2/gFnWMXgwffgYMJpiKYkmW3tTg3ZQ9Jq+f8XN+A5eeUKHWvJWJ2sgJ1Sop+wwhqFVijqWaJhwtD8MNlSBeWNNWTa5Z5kPZw5+LbVT99wqTdx29lMUH4OIG/D86ruKEauBjvH5xy6um/Sfj7ei6UUVk4AIl3MyD4MSSTOFgSwsH/QJWaQ5as7ZcmgBZkzjjU1UrQ74ci1gWBCSGHtuV1H2mhSnO3Wp/3fEV5a+4wz//6qy8JxjZsmxxy5+4w9CDNJY09T072iKG0EnOS0arEYgXqYnXcYHwjTtUNAcMelOd4xpkoqiTYICWFq0JSiPfPDQdnt+4/wuqcXY47QILbgAAAABJRU5ErkJggg==);
+		background-color: #959CA6;
+		text-align: center;
+		
+}
+
+.footer {
+	margin-top: 40px;
+	position: fixed;
+	background-color: green;
 }
 
 /*HOME PAGE --------------------------------------------*/	
@@ -34,19 +91,23 @@ body {
 		z-index: 3;
 	}
 
-	#home_main {
-		margin-top: 100px;
-		min-height: 400px;
-		background-color: green;
+
+
+	#signup_form {
+		float: left;
+		color: black;
 	}
 
-/*--------------------------------------------------------*/
+/*End of HOME--------------------------------------------------------*/
+
+/*PROFILE-------------------------------------------------------*/
 
 .picture_div {
-	background-color: green;
+	background-image: url("/uploads/profiles/blank_profile.jpg");
 	height: 250px;
 	width: 250px;
 	float: left;
+	z-index: 5;
 }
 
 .bio_div {
@@ -57,62 +118,71 @@ body {
 }
 	
 	.bio_content {
-		background-color: black;
+		background-color: #004158;
 		height: 180px;
 		padding: 10px;
 		overflow: hidden; 
 	}
 
 	.profile_picture {
-		width:250px;
-		height:250px;
+		width:240px;
+		height:240px;
 		overflow: hidden;
+		border-style: solid;
+		border-color: white;
+		border-width: 5px;
 
-		
 	}
 
 		#picture_upload {
 			width: 50%;
 			height: 50px;
-			background-color: orange;
+			background-color: #026675;
 			float: left;
+			
+			
 		}
 
 		#bio_upload {
 			width: 50%;
 			height: 50px;
-			background-color: green;
+			background-color: #026675;
 			margin-left: 50%;
 		}
 
-.discover_post a {
-	color: white;
-}
+	.post_element {
+		width:50%;
+		height: 30px;
+		background-color: #2F363E;
+		margin-left: 50%;
+		padding-top: 10px;
+		text-align: center;
+	}
 
 	.discover_element {
 		width:50%;
 		height: 30px;
 		padding-top: 10px;
-		background-color: red;
+		background-color: #2F363E;
 		float: left;
 		text-align: center;
 	}
 	
-	.post_element {
-		width:50%;
-		height: 30px;
-		background-color: red;
-		margin-left: 50%;
-		padding-top: 10px;
-		text-align: center;
+	.discover_post a {
+		color: white;
 	}
+
 
 	.post {
 		margin: auto;
 		min-height: 80px;
 		width: 95%;
 		padding: 10px;
-		background-color: orange;
+		font: bold;
+		background-color: white;
+		color: #004158;
+
+		
 	}
 
 		.post_picture_holder {
@@ -123,15 +193,19 @@ body {
 		}
 
 			.post_picture {
-				height: 80px;
-				width: 80px;
+				height: 76px;
+				width: 76px;
 				float: left;
 				background-color: gray;
+				border-style: solid;
+				border-color: #2F363E;
+				border-width: 2px;
 			}
 
 		.post_person {
+			
 			margin-left: 90px;
-			background-color: green;
+			
 		}
 
 		.post_content {
@@ -139,18 +213,28 @@ body {
 		}
 
 		.post_time {
+			
 			margin-left: 90px;
-			background-color: red;
+			float: right;
 		}
+
+/*End of PROFILE-------------------------------------------------------*/
+
+/* DISCOVER--------------------------------------------*/	
+
+	
+
+	
 
 	.discover_user {
 		margin: auto;
 		height: 70px;
-		width: 500px;
-		
+		width: 600px;
+		background-color: #2F363E;
 		border-style: solid;
 		border-color: white;
-		border-width: 5px;
+		border-width: 2px;
+		color: white;
 	}
 
 		.discover_pic {
@@ -169,18 +253,49 @@ body {
 			position: absolute;
 			margin-left: 60px;
 			font-size: 30px;
+			margin-top: 5px;
 		}
 		.discover_connection {
-			width: 50px;
+			width: 100px;
 			padding: 10px;
-			margin-top: 20px;
+			margin-top: 15px;
 			float: left;
-			margin-left: 400px;
+			margin-left: 440px;
 			position: absolute;
-			background-color: green;
+			background-color: white;
+			text-align: center;
 
 		}
+		.discover_connection a {
+			color: black;
+		}
 
-h1 {
-	margin: 0;
+/*-----------------------------------------------*/
+
+#make_post {
+	margin-left: 110px;
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

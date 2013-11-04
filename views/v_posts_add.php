@@ -1,13 +1,19 @@
 <div class = "wrapper">
 
-<form method='POST' action='/posts/p_add'>
+<div class = "top_bar">
 	
-	<label for='content'>New Post:</label><br>
-	<textarea name='content' id='content'></textarea>
-	
-	<br><br>
-	<input type='submit' value='Make post'>
+</div>
 
-</form>
+<div class = "make_post_div">
+	<form id= "make_post" method='POST' action='/posts/p_add'>
+		
+		<label for='content'>New Post:</label><br>
+		<textarea rows="20" cols="100" name='content' id='content'></textarea>
+		
+		<br>
+		<input type='submit' value='Make Post'>
+
+	</form>
+</div>
 
 </div>
