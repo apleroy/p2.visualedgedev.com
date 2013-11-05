@@ -31,5 +31,6 @@
 	</div>
 	<br>
 <?php endforeach; ?>
+	<div class = "top_bar"></div>
 
 </div>

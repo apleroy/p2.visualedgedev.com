@@ -9,19 +9,42 @@ class users_controller extends base_controller {
 	public function index() {
 	}
 
-	public function signup($signuperror = NULL, $duplicateerror = NULL) {
+
+	
+	public function signup($signup_error = NULL) {
 		
 		$this->template->content = View::instance('v_index_index');
-
-		$this->template->content->signuperror = $signuperror;
-
-		$this->template->content->duplicateerror = $duplicateerror;
+		
+		$this->template->content->signup_error = $signup_error;
 
 		echo $this->template;
+		
 	}
+
+	public function signup_duplicate($duplicate_error = NULL) {
+		
+		$this->template->content = View::instance('v_index_index');
+		
+		$this->template->content->duplicate_error = $duplicate_error;
+
+		echo $this->template;
+		
+	}
+
+	public function signup_invalid($invalid_error = NULL) {
+		
+		$this->template->content = View::instance('v_index_index');
+		
+		$this->template->content->invalid_error = $invalid_error;
+
+		echo $this->template;
+		
+	}
+
 
 	public function p_signup() {
 
+		
 		//ensure valid email address syntax- this is the variable
 			$email_a = $_POST['email'];
 
@@ -36,27 +59,27 @@ class users_controller extends base_controller {
 		//validation of empty fields
 
 		if (empty($_POST['first_name'])) {
-        	Router::redirect("/users/signup/signuperror");
+			Router::redirect("/users/signup/signup_error");
 
     	} elseif (empty($_POST['last_name'])) {
-        	Router::redirect("/users/signup/signuperror");
+    		Router::redirect("/users/signup/signup_error");
         	
     	} elseif (empty($_POST['email'])) {
         	Router::redirect("/users/signup/signuperror");
         	
     	} elseif (empty($_POST['password'])) {
-        	Router::redirect("/users/signup/signuperror");
+        	Router::redirect("/users/signup/signup_error");
         
         //check for valid email syntax	
     	} elseif (!filter_var($email_a, FILTER_VALIDATE_EMAIL)) {
     	
-			Router::redirect("/users/signup/signuperror");
+			Router::redirect("/users/signup_invalid/signup_invalid");
 		
     	} 
     	//check duplicate
     	elseif ($email_validation) {
 				
-			Router::redirect("/users/signup/duplicateerror");
+			Router::redirect("/users/signup_duplicate/signup_duplicate");
 		
 		//signup the user and send info to DB	
 		} else {
@@ -68,7 +91,22 @@ class users_controller extends base_controller {
 
 				$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
 
-							
+				$q5 = "SELECT users.user_id
+				FROM users 
+	        	WHERE users.email = '".$_POST['email']."'
+	        	";
+			
+				$user_validation = DB::instance(DB_NAME)->select_field($q5);
+				//insert a default pic for user
+
+				$data = Array('pic_id' => $user_validation,
+						'user_id' => $user_validation,
+						'created' => Time::now(),
+						'picture' => "/uploads/profiles/blank_profile.jpg");
+
+				$user_id = DB::instance(DB_NAME)->update_or_insert_row('profilePics', $data);
+
+				
 				//upon signup, give the user a token to continue directly to their page
 				$q2 = "SELECT token
 				FROM users 
@@ -157,6 +195,7 @@ class users_controller extends base_controller {
 			$this->template->content->bios = $bios;
 
 		//This person's profile picture
+
 			$picQ = "SELECT profilePics.picture
 				FROM profilePics
 				WHERE profilePics.user_id = ".$this->user->user_id;
@@ -169,7 +208,7 @@ class users_controller extends base_controller {
 		//Show selected posts from people the user is following.
 		//Join together user pic from those people.
 		//Order the posts descending by time created so that most recent is on top
-			
+
 			$postsQ = 'SELECT
 				posts.content,
 				posts.created,
@@ -194,7 +233,7 @@ class users_controller extends base_controller {
 
 		
 		echo $this->template;
-	
+			
 		
 	}
 
@@ -215,7 +254,8 @@ class users_controller extends base_controller {
 		
 		$image = Upload::upload($_FILES, "/uploads/profiles/", array("jpg", "jpeg", "gif", "png"), "picture".$this->user->user_id);
 
-		if($image == ' ' || $image == 'Invalid file type.') {
+		//need to prevent a blank photo upload from occuring
+		if(($_FILES['photo']['size']) == 0 || $image == 'Invalid file type.') {
 
             Router::redirect("/users/profile");
 

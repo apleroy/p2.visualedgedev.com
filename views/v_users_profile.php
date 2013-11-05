@@ -8,9 +8,9 @@
 
 		<div class = "picture_div">
 			<?php foreach($pics as $pic): ?>
-
 				<div class="profile_picture">
-					<img src="/uploads/profiles/<?=$pic['picture']?>" width="240" height="240">
+					<img src="<?=$pic['picture']?>" width="240" height="240">
+					
 				</div>
 			<?php endforeach; ?>
 
@@ -20,7 +20,7 @@
 		<div class = "bio_div">
 
 			<div class = "bio_content">
-			<h1><?= $user->first_name?> <?= $user->last_name?></h1>
+			<h1><?= $user->first_name?> <?= $user->last_name?></h1><br>
 				<?php foreach($bios as $bio): ?>
 					<?=$bio['content']?> 
 				<?php endforeach; ?>
@@ -85,6 +85,8 @@
 			</div>
 		<br>
 	<?php endforeach; ?>
+
+	<div class = "top_bar"></div>
 
 </div>
 

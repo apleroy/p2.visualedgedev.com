@@ -15,11 +15,12 @@ class posts_controller extends base_controller {
 		Router::redirect("/users/profile");
 	}
 
-	public function add() {
+	public function add($error = NULL) {
 
 		$this->template->content = View::instance('v_posts_add');
-		$this->template->title = "New Post";
-
+		
+		$this->template->content->error = $error;
+		
 		echo $this->template;
 
 	}
@@ -31,6 +32,11 @@ class posts_controller extends base_controller {
 		$_POST['created'] = Time::now();
 
 		$_POST['modified'] = Time::now();
+
+		//error check to prevent blank post
+		if(empty($_POST['content'])) {
+			Router::redirect("/posts/add/error");
+		}
 
 		DB::instance(DB_NAME)->insert('posts', $_POST);
 

@@ -1,3 +1,4 @@
+<div id="home_page">
 <div class="navigation_background">
 </div>
 
@@ -5,7 +6,7 @@
 
 	<div class = "navigation">	
 	  
-	  	<div class = "logo">S<b>//</b>DEBAR</div>
+	  	<div class = "logo"><a href="/">S<b>//</b>DEBAR</a></div>
 		
 		<form id="login_form" method='POST' action='/users/p_login'>
 				Email<input type='text' name='email'>
@@ -26,7 +27,7 @@
 	</div>	
 	
 		
-			
+		<div id="signup_form_div">
 			<!--Signup Form -->
 			<form id="signup_form" method='POST' action='/users/p_signup'>
 				First Name<br>
@@ -49,21 +50,44 @@
 			     		//tz.name(); // Returns the name of the time zone eg "Europe/Berlin"
 					 </script>
 			
-				<?php if(isset($duplicateerror)): ?>
-					<div class = 'error'>
-						This email address is already registered.
-					</div>
-				<?php elseif(isset($signuperror)): ?>
+				<?php if(isset($signup_error)): ?>
 					<div class = 'error'>
 						Please complete all fields.
 					</div>
+				<?php elseif(isset($duplicate_error)): ?>
+					<div class = 'error'>
+						This email address is already in use.  Please login or provide a new email address.
+					</div>
+				<?php elseif(isset($invalid_error)): ?>
+					<div class = 'error'>
+						This is not a valid email address.
+					</div>
 				<?php endif; ?>
 			</form>
+		</div>
 
+		<div id="main_logo">
+			<div id="main_logo_content">
+				<br>
+				S//DEBAR
 
+				<p>
+					<br>
+					+1: Upload and Edit Profile Picture and View User Profile Pictures in Posts<br>
+					<br>
+					+1: Upload and Edit Profile Biography
+					<br>
+					<br>
+				</p>
+				<p2>
+					Andy LeRoy  |  P2 - CSCI E-15 - Dynamic Web Applications
+				</p2>
+			</div>
+		</div>
 		
 
 
 
 
+</div>
 </div>

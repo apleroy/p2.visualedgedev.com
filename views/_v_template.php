@@ -16,7 +16,8 @@
 
 
 <body>
-      
+
+
     <?php if($user): ?>
 
     <div class = "navigation_background">
@@ -40,9 +41,10 @@
 
 	<?php if(isset($client_files_body)) echo $client_files_body; ?>
 
-<div class="footer">
-</div>
-	
+
+
+
+
 </body>
 
 </html>
