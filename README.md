@@ -10,3 +10,6 @@ Open Items
 4.  Format pic upload and bio update buttons
 5.  To live server
 6.  HTML/CSS Validation
+7.  CLean up code and CSS
+8.  Delete bootstrap extras
+9.  Time zone JS?
