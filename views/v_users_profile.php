@@ -1,17 +1,22 @@
 <div class = "wrapper">
 
-<div class = "top_bar">
-	
-</div>
+	<div class = "top_bar"></div>
 
 	<?php if(isset($user)): ?>
 
 		<div class = "picture_div">
 			<?php foreach($pics as $pic): ?>
+
 				<div class="profile_picture">
-					<img src="<?=$pic['picture']?>" width="240" height="240">
 					
+					<?php if($pic): ?>
+						<img src="/uploads/profiles/<?=$pic['picture']?>" alt="Profile picture" width="240" height="240">
+					<?php else: ?>
+						<img src="/uploads/profiles/blank_profile.jpg" alt="Profile picture" width="240" height="240">
+					<?php endif; ?>
+
 				</div>
+			
 			<?php endforeach; ?>
 
 		</div>
@@ -20,10 +25,10 @@
 		<div class = "bio_div">
 
 			<div class = "bio_content">
-			<h1><?= $user->first_name?> <?= $user->last_name?></h1><br>
-				<?php foreach($bios as $bio): ?>
-					<?=$bio['content']?> 
-				<?php endforeach; ?>
+				<h1><?= $user->first_name?> <?= $user->last_name?></h1><br>
+					<?php foreach($bios as $bio): ?>
+						<?=$bio['content']?>
+					<?php endforeach; ?>
 			</div>
 			
 			<div class = "profile_update_uploads">
@@ -64,7 +69,7 @@
 			<div class = "post">
 				<div class = "post_picture_holder">
 					<div class = "post_picture">
-						<img src="/uploads/profiles/<?=$post['picture']?>" width="76" height="76">
+						<img src="/uploads/profiles/<?=$post['picture']?>" alt="Profile picture" width="76" height="76">
 					</div>
 				</div>
 				

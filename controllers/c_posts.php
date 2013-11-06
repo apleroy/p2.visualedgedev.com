@@ -35,7 +35,9 @@ class posts_controller extends base_controller {
 
 		//error check to prevent blank post
 		if(empty($_POST['content'])) {
+			
 			Router::redirect("/posts/add/error");
+		
 		}
 
 		DB::instance(DB_NAME)->insert('posts', $_POST);
@@ -99,12 +101,6 @@ class posts_controller extends base_controller {
 		Router::redirect("/posts/users");
 
 	}
-
-
-
-
-
-
 
 }
 

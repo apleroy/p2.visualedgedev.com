@@ -45,16 +45,16 @@ class users_controller extends base_controller {
 	public function p_signup() {
 
 		
-		//ensure valid email address syntax- this is the variable
-			$email_a = $_POST['email'];
+		//ensure valid email address syntax- this is the variable to be used below in syntax check
+		$email_a = $_POST['email'];
 
 		//check to ensure there is not already a user with that email (a duplicate)
-			$q = "SELECT users.email
+		$q = "SELECT users.email
 				FROM users 
 	        	WHERE users.email = '".$_POST['email']."'
 	        	";
 			
-			$email_validation = DB::instance(DB_NAME)->select_field($q);
+		$email_validation = DB::instance(DB_NAME)->select_field($q);
 
 		//validation of empty fields
 
@@ -84,6 +84,8 @@ class users_controller extends base_controller {
 		//signup the user and send info to DB	
 		} else {
 
+				//1. insert the data into the DB
+
 				$_POST['created'] = Time::now();
 				$_POST['modified'] = Time::now();
 				$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
@@ -91,27 +93,34 @@ class users_controller extends base_controller {
 
 				$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
 
-				$q5 = "SELECT users.user_id
-				FROM users 
-	        	WHERE users.email = '".$_POST['email']."'
-	        	";
-			
-				$user_validation = DB::instance(DB_NAME)->select_field($q5);
-				//insert a default pic for user
+				//2. get the user id in order to upload the default photo for the user
+				//(Currently this is not working.  Please see the open items and review items explanation in github readme).
 
-				$data = Array('pic_id' => $user_validation,
-						'user_id' => $user_validation,
-						'created' => Time::now(),
-						'picture' => "/uploads/profiles/blank_profile.jpg");
+					$q_userID = "SELECT users.user_id
+					FROM users 
+		        	WHERE users.email = '".$_POST['email']."'
+		        	";
+				
+					$user_validation = DB::instance(DB_NAME)->select_field($q_userID);
+				
+				//2a. Insert a default pic for user.  See error note in item 2 above.
+				//This uploads a "broken link.  Since INNER JOIN is used on posts, 
+				//a profile picture is needed (even if the link is broken in the view).
 
-				$user_id = DB::instance(DB_NAME)->update_or_insert_row('profilePics', $data);
+					$data = Array('pic_id' => $user_validation,
+							'user_id' => $user_validation,
+							'created' => Time::now(),
+							'picture' => "/uploads/profiles/blank_profile.jpg");
+
+					$user_id = DB::instance(DB_NAME)->update_or_insert_row('profilePics', $data);
 
 				
-				//upon signup, give the user a token to continue directly to their page
+				//3.  upon signup, give the user a token to continue directly to their page
+
 				$q2 = "SELECT token
-				FROM users 
-	        	WHERE email = '".$_POST['email']."'
-	        	AND password = '".$_POST['password']."'";
+					FROM users 
+		        	WHERE email = '".$_POST['email']."'
+		        	AND password = '".$_POST['password']."'";
 
 				$token = DB::instance(DB_NAME)->select_field($q2);
 
@@ -149,14 +158,17 @@ class users_controller extends base_controller {
 		$token = DB::instance(DB_NAME)->select_field($q);
 
 		if(!$token) {
+
 			Router::redirect("/users/login/error");
 			//echo "Not valid";
-		}
-		else {
+
+		} else {
+			
 			setcookie("token", $token, strtotime('+1 year'), '/');
 
 			Router::redirect("/users/profile");
 			//echo "Logged in!";
+		
 		}
 	}
 
@@ -204,7 +216,7 @@ class users_controller extends base_controller {
 
 			$this->template->content->pics = $pics;
 
-
+			
 		//Show selected posts from people the user is following.
 		//Join together user pic from those people.
 		//Order the posts descending by time created so that most recent is on top
@@ -238,15 +250,25 @@ class users_controller extends base_controller {
 	}
 
 	public function p_bio() {
-		$_POST['user_id'] = $this->user->user_id;
 
-		$_POST['created'] = Time::now();
+		if (empty($_POST['content'])) {
+			
+			Router::redirect("/users/profile");
+		
+		} else {
 
-		$_POST['bio_id'] = $this->user->user_id;
+			$_POST['user_id'] = $this->user->user_id;
+
+			$_POST['created'] = Time::now();
+
+			$_POST['bio_id'] = $this->user->user_id;
+			
+			DB::instance(DB_NAME)->update_or_insert_row('bios', $_POST);
+			
+			Router::redirect("/users/profile");
 		
-		DB::instance(DB_NAME)->update_or_insert_row('bios', $_POST);
-		
-		Router::redirect("/users/profile");
+		}
+	
 	}
 
 
@@ -255,6 +277,8 @@ class users_controller extends base_controller {
 		$image = Upload::upload($_FILES, "/uploads/profiles/", array("jpg", "jpeg", "gif", "png"), "picture".$this->user->user_id);
 
 		//need to prevent a blank photo upload from occuring
+		//(empty[$_FILES]) ???????? 
+
 		if(($_FILES['photo']['size']) == 0 || $image == 'Invalid file type.') {
 
             Router::redirect("/users/profile");
