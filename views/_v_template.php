@@ -3,7 +3,7 @@
 <head>
 	<title><?php if(isset($title)) echo $title; ?></title>
 
-	<meta http-equiv="Content-Type" content="text/html" charset=UTF-8>	
+	<meta charset="UTF-8">	
 	
 	<!--Common CSS/JS -->
 	<link rel="stylesheet" href="/css/app.css" type="text/css">

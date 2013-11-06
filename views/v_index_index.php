@@ -44,11 +44,7 @@
 					<br>
 					<input type='submit' value='Sign Up'>
 					<input type='hidden' name='timezone'>
-						 <script language="javascript" type="text/javascript" src="jstz.js">
-				    		$('input[name=timezone]').val(jstz.determine().name());
-				     		//var tz = jstz.determine(); // Determines the time zone of the browser client
-				     		//tz.name(); // Returns the name of the time zone eg "Europe/Berlin"
-						 </script>
+						 
 				
 					<?php if(isset($signup_error)): ?>
 						<div class = 'error'>
@@ -80,10 +76,11 @@
 						+1: Upload and Edit Profile Biography
 						<br>
 						<br>
+						<br>
 					</p>
-					<p2>
+					<p>
 						Andy LeRoy  |  P2 - CSCI E-15 - Dynamic Web Applications
-					</p2>
+					</p>
 				</div>
 			</div>
 			
