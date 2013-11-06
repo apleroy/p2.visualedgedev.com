@@ -19,3 +19,13 @@ Currently the user is simply redirected back to the profile page with no warning
 this process manually.
 
 5.  There is no message letting users know they are not following anyone if their profile of followers is blank.
+
+6.  The HTML validator was successful, but the CSS Validation was invalid on 4 items, 
+all of which are a URL image I found that gives the background a "granular" look.  To preserve this look I left the
+errors as is.
+
+I welcome any feedback and suggestions!
+
+Thanks,
+
+Andy
